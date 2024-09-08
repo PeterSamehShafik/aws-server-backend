@@ -3,12 +3,12 @@ import multer from "multer";
 export const fileValidation = {
   image: ["image/png", "image/jpeg", "image/gif", "image/webp"],
   pdf: ["application/pdf"],
-  text: ["text/plain", "text/csv", "text/html", "text/css", "text/xml"],
+  text: ["text/plain", "text/csv", "text/html", "text/css", "text/xml", "text/txt"],
 };
 
 export const HME = (err, req, res, next) => {
   if (err) {
-    return res.status(400).json({ message: "multer error", err });
+    return res.status(400).json({ message: "multer error", details:err });
   } else {
     next();
   }
