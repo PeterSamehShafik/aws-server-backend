@@ -12,6 +12,7 @@ router.post(
 );
 
 router.get('/',awsController.getAllFiles)
+router.get('/folders',awsController.getAllFolders)
 
 router.delete('/',awsController.deleteFile)
 

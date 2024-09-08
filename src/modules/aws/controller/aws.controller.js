@@ -86,3 +86,23 @@ export const deleteFile = asyncHandler(async (req, res, next) => {
 
   return res.status(204).send({});
 });
+
+
+export const getAllFolders= asyncHandler(async (req, res, next) => {
+  const params = {
+    Bucket: bucketName,
+  };
+  const command = new ListObjectsV2Command(params);
+  const aws_response = await client_s3.send(command);
+  aws_response.Contents = aws_response.Contents.filter(
+    (file) => file.Size == 0
+  );
+
+  const res_to_front = {
+    count: aws_response.Contents.length,
+    files: aws_response.Contents,
+  };
+
+  // Return the list of objects (files) in the bucket
+  return res.status(200).json({ message: "done", data: res_to_front });
+});
