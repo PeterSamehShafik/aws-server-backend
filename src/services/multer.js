@@ -16,8 +16,14 @@ export const HME = (err, req, res, next) => {
 
 const useMulter = (customValidation = fileValidation.image) => {
   const storage = multer.memoryStorage({});
-
-  const upload = multer({ storage });
+  function fileFilter(req, file, cb) {
+    if (!customValidation.includes(file.mimetype)) {
+      cb("Invalid format", false);
+    } else {
+      cb(null, true);
+    }
+  }
+  const upload = multer({ fileFilter, storage });
 
   return upload;
 };
