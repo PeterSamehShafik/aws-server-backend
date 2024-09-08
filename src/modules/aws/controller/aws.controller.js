@@ -18,6 +18,7 @@ export const addFile = asyncHandler(async (req, res, next) => {
   const fileName = `${Date.now()}_${file.originalname}`;
   const params = {
     Bucket: bucketName,
+    // Key: `test/${fileName}`,
     Key: fileName,
     Body: file.buffer,
     ContentType: file.mimetype,
@@ -74,15 +75,14 @@ export const getAllFiles = asyncHandler(async (req, res, next) => {
 });
 
 export const deleteFile = asyncHandler(async (req, res, next) => {
-  const { id } = req.params;
-
+  const { id } = req.body;
   const params = {
     Bucket: bucketName,
     Key: id,
   };
 
   const command = new DeleteObjectCommand(params);
-  const aws_res = await client_s3.send(command);  
+  const aws_res = await client_s3.send(command);
 
-  return res.status(204);
+  return res.status(204).send({});
 });

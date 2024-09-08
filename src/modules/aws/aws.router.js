@@ -11,9 +11,8 @@ router.post(
   awsController.addFile
 );
 
-
 router.get('/',awsController.getAllFiles)
 
-router.delete('/:id',awsController.deleteFile)
+router.delete('/',awsController.deleteFile)
 
 export default router;
