@@ -9,13 +9,16 @@ import {
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 export const addFile = asyncHandler(async (req, res, next) => {
+  const { folder } = req.body;
   const file = req.file;
 
   if (!file) {
     return next(Error("No file uploaded", { cause: 400 }));
   }
 
-  const fileName = `${Date.now()}_${file.originalname}`;
+  const fileName = folder
+    ? `${folder}/${Date.now()}_${file.originalname}`
+    : `${Date.now()}_${file.originalname}`;
   const params = {
     Bucket: bucketName,
     // Key: `test/${fileName}`,
@@ -87,8 +90,7 @@ export const deleteFile = asyncHandler(async (req, res, next) => {
   return res.status(204).send({});
 });
 
-
-export const getAllFolders= asyncHandler(async (req, res, next) => {
+export const getAllFolders = asyncHandler(async (req, res, next) => {
   const params = {
     Bucket: bucketName,
   };
