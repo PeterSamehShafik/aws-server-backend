@@ -6,14 +6,18 @@ const router = Router();
 
 router.post(
   "/",
-  useMulter([...fileValidation.image,...fileValidation.pdf]).single("file"),
+  useMulter([
+    ...fileValidation.image,
+    ...fileValidation.pdf,
+    ...fileValidation.text,
+  ]).single("file"),
   HME,
   awsController.addFile
 );
 
-router.get('/',awsController.getAllFiles)
-router.get('/folders',awsController.getAllFolders)
+router.get("/", awsController.getAllFiles);
+router.get("/folders", awsController.getAllFolders);
 
-router.delete('/',awsController.deleteFile)
+router.delete("/", awsController.deleteFile);
 
 export default router;

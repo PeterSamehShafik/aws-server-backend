@@ -3,7 +3,7 @@ import multer from "multer";
 export const fileValidation = {
   image: ["image/png", "image/jpeg", "image/gif", "image/webp"],
   pdf: ["application/pdf"],
-  text: ["text/plain", "text/csv", "text/html", "text/css", "text/xml", "text/txt"],
+  text: ["text/plain", "text/csv", "text/html", "text/css", "text/xml"],
 };
 
 export const HME = (err, req, res, next) => {
