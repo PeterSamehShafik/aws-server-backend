@@ -17,7 +17,7 @@ const appRouter = (app) => {
     app.use(cors({}));
 
     //API Routing
-    app.use(`${baseURL}/aws`, indexRouter.awsRouter)
+    app.use(`${baseURL}/aws/s3`, indexRouter.awsRouter)
 
 
     //In-valid routing handling

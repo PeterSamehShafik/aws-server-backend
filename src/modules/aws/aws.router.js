@@ -1,10 +1,19 @@
 import { Router } from "express";
 import * as awsController from "./controller/aws.controller.js";
+import useMulter, { fileValidation, HME } from "./../../services/multer.js";
 
 const router = Router();
 
-router.get("/", (req, res, next) => {
-  res.send("Hey");
-});
+router.post(
+  "/",
+  useMulter([...fileValidation.image,...fileValidation.pdf]).single("file"),
+  HME,
+  awsController.addFile
+);
+
+
+router.get('/',awsController.getAllFiles)
+
+router.delete('/:id',awsController.deleteFile)
 
 export default router;

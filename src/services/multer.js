@@ -1,31 +1,25 @@
-import multer from "multer"
+import multer from "multer";
 
 export const fileValidation = {
-    image: ["image/png", "image/jpeg", "image/gif"],
-    pdf: ["application/pdf"]
-}
+  image: ["image/png", "image/jpeg", "image/gif", "image/webp"],
+  pdf: ["application/pdf"],
+  text: ["text/plain", "text/csv", "text/html", "text/css", "text/xml"],
+};
 
 export const HME = (err, req, res, next) => {
-    if (err) {
-        return res.status(400).json({ message: "multer error", err })
-    } else {
-        next()
-    }
-}
+  if (err) {
+    return res.status(400).json({ message: "multer error", err });
+  } else {
+    next();
+  }
+};
 
-const myMulter = (customValidation = fileValidation.image) => {
+const useMulter = (customValidation = fileValidation.image) => {
+  const storage = multer.memoryStorage({});
 
-    const storage = multer.diskStorage({})
-    function fileFilter(req, file, cb) {
-        if (customValidation.includes(file.mimetype)) {
-            cb(null, true)
-        } else {
-            cb("In-valid Format", false)
-        }
-    }
-    const upload = multer({ fileFilter, storage })
+  const upload = multer({ storage });
 
-    return upload
-}
+  return upload;
+};
 
-export default myMulter
+export default useMulter;
