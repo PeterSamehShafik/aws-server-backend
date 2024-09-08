@@ -21,3 +21,18 @@ export const getInstances = asyncHandler(async (req, res, next) => {
   // Send the instances data as a JSON response
   res.status(200).json({ message: "done", data: instances });
 });
+
+export const manageEc2 = asyncHandler(async (req, res, next) => {
+  const lambdaURL = process.env.LAMBDA_URL;
+  const { action, instanceId } = req.query;
+  if (!action || !instanceId) {
+    return next(Error("Missing action or instanceId", { cause: 400 }));
+  }
+
+  const response = await fetch(
+    `${lambdaURL}?action=${action}&instanceId=${instanceId}`
+  );
+  const result = await response.json();
+
+  return res.status(response.status).json({ message: "done", result });
+});
